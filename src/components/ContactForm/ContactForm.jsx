@@ -13,10 +13,12 @@ const ContactForm = ({ sumbit }) => {
   const [number, setNumber] = useState('');
   const formRef = useRef(null);
   const { contacts } = useSelector(selectContacts);
+
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
+
     const isExist = contacts.some(contact => contact.name === name);
 
     if (isExist) {
