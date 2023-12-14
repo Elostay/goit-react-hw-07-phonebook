@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { Form, Input, Button, Label } from '../ContactForm/ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from '../../redux/selectors';
-import { addContactAction } from '../../redux/contacts/contactsSlice';
+import { selectContacts } from '../../redux/selectors';
+import { addContactAction } from 'api/operations';
 
 const nameId = nanoid();
 const numberId = nanoid();
@@ -12,7 +12,7 @@ const ContactForm = ({ sumbit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const formRef = useRef(null);
-  const { contacts } = useSelector(getContacts);
+  const { contacts } = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {

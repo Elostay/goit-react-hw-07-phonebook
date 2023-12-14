@@ -1,12 +1,12 @@
 import { nanoid } from 'nanoid';
 import { FilterLabel, Input, Container } from './Filter.styled';
-import { getFilterValue } from '../../redux/selectors';
+import { selectFilterValue } from '../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchFilterAction } from '../../redux/filter/filterSlice';
 
 const Filter = () => {
   const filterId = nanoid();
-  const { filter } = useSelector(getFilterValue);
+  const { filter } = useSelector(selectFilterValue);
   const dispatch = useDispatch();
 
   const changeFilter = e => {
