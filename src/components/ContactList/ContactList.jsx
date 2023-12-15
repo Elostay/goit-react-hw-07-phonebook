@@ -1,18 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { List } from './ContactList.styled';
 import ContactListItem from './ContactListItem';
-import {
-  selectContacts,
-  selectError,
-  selectFilterValue,
-  selectLoading,
-} from '../../redux/selectors';
+import { selectError, selectLoading } from '../../redux/contacts/selectors';
 import { useEffect } from 'react';
-import { fetchContactsAction } from 'api/operations';
+import { fetchContactsAction } from '../../redux/contacts/operations';
+import { selectFilteredContacts } from '../../redux/selectors';
 
 const ContactList = () => {
-  const { filter } = useSelector(selectFilterValue);
-  const { contacts } = useSelector(selectContacts);
+  const contacts = useSelector(selectFilteredContacts);
+
   const isLoading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
@@ -21,21 +17,11 @@ const ContactList = () => {
     dispatch(fetchContactsAction());
   }, [dispatch]);
 
-  const getFilteredContacts = () => {
-    if (filter.filter === '') return;
-    const normalizedFilter = filter.toLowerCase().trim();
-    const visibleContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().trim().includes(normalizedFilter)
-    );
-    return visibleContacts;
-  };
-  const visibleContacts = getFilteredContacts();
-
   return (
     <List>
       {isLoading && !error && <b>Request in progress</b>}
-      {visibleContacts.map(({ name, id, phone }) => (
-        <ContactListItem key={id} id={id} name={name} phone={phone} />
+      {contacts.map(({ name, id, number }) => (
+        <ContactListItem key={id} id={id} name={name} number={number} />
       ))}
     </List>
   );

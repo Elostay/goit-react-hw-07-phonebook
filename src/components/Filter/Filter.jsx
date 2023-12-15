@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { FilterLabel, Input, Container } from './Filter.styled';
-import { selectFilterValue } from '../../redux/selectors';
+import { selectFilterValue } from '../../redux/filter/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchFilterAction } from '../../redux/filter/filterSlice';
 

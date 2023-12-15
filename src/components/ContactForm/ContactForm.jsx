@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { Form, Input, Button, Label } from '../ContactForm/ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from '../../redux/selectors';
-import { addContactAction } from 'api/operations';
+import { selectContacts } from '../../redux/contacts/selectors';
+import { addContactAction } from '../../redux/contacts/operations';
 
 const nameId = nanoid();
 const numberId = nanoid();
@@ -11,8 +11,8 @@ const numberId = nanoid();
 const ContactForm = ({ sumbit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const formRef = useRef(null);
-  const { contacts } = useSelector(selectContacts);
+
+  const contacts = useSelector(selectContacts);
 
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const ContactForm = ({ sumbit }) => {
       alert(`${name} is already in contacts`);
       return;
     }
-    dispatch(addContactAction({ name, number, id: nanoid() }));
+    dispatch(addContactAction({ name, number }));
 
     setName('');
     setNumber('');
@@ -46,7 +46,7 @@ const ContactForm = ({ sumbit }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} ref={formRef}>
+    <Form onSubmit={handleSubmit}>
       <Label htmlFor={nameId}>Name</Label>
       <Input
         type="text"
